@@ -27,14 +27,13 @@ public class Main {
                 .count();
         System.out.println("Призывников: " + conscriptsCount);
 
-        List<String> lastNamesOfWorkingPpl = persons.stream()
+        List<Person> workingPpl = persons.stream()
                 .filter(p -> p.getEducation() == Education.HIGHER)
                 .filter(p -> (p.getSex() == Sex.MAN && p.getAge() >= 18 && p.getAge() <= 65) ||
                         (p.getSex() == Sex.WOMAN && p.getAge() >= 18 && p.getAge() <= 60))
-                .map(Person::getFamily)
-                .sorted()
-                .collect(Collectors.toList());
-        //System.out.println(lastNamesOfWorkingPpl);
-        System.out.println("В отсортированном списке рабочих: " + lastNamesOfWorkingPpl.size());
+                .sorted((o1, o2) -> o1.getFamily().compareTo(o2.getFamily()))
+                .toList();
+
+        System.out.println("В отсортированном списке рабочих: " + workingPpl.size());
     }
 }
